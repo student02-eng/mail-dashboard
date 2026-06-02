@@ -20,7 +20,10 @@ export async function GET() {
     );
   }
 
-  const rows = await readSheet(sheetId, tabName);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const accessToken = (session as any).accessToken as string | undefined;
+
+  const rows = await readSheet(sheetId, tabName, accessToken);
   if (rows.length === 0) {
     return NextResponse.json({ columns: [], data: [], headers: [] });
   }
