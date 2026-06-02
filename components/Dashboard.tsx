@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { signOut } from "next-auth/react";
 import type { ColumnMeta } from "@/lib/columnMapper";
 import KPIBand from "./KPIBand";
 import SummaryBar from "./SummaryBar";
@@ -19,11 +18,7 @@ interface SheetData {
   headers: string[];
 }
 
-interface Props {
-  user?: { name?: string | null; email?: string | null; image?: string | null };
-}
-
-export default function Dashboard({ user }: Props) {
+export default function Dashboard() {
   const [sheetData, setSheetData] = useState<SheetData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -121,20 +116,6 @@ export default function Dashboard({ user }: Props) {
             </svg>
             {loading ? "로딩 중…" : "↻ 리프레시"}
           </button>
-          {user && (
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: 12, color: "var(--text-mute)" }}>
-                {user.email}
-              </span>
-              <button
-                className="btn"
-                style={{ fontSize: 11, padding: "5px 10px" }}
-                onClick={() => signOut({ callbackUrl: "/signin" })}
-              >
-                로그아웃
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
